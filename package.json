@@ -16,14 +16,12 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "colors": "^1.1.2",
-    "express": "^4.15.3",
     "fs": "^0.0.1-security",
     "http": "^0.0.0",
     "ip": "^1.1.5",
+    "livereload": "^0.6.2",
+    "node-livereload": "^0.6.0",
     "path": "^0.12.7",
-    "url": "^0.11.0",
-    "webpack": "^3.0.0",
-    "webpack-dev-middleware": "^1.11.0",
-    "webpack-hot-middleware": "^2.18.1"
+    "url": "^0.11.0"
   }
 }

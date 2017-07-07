@@ -6,6 +6,7 @@ var ip = require('ip');
 var c = require('child_process');
 var fs = require('fs');
 var path = require('path');
+var livereload = require('livereload');
 
 var filePath = './src/html';
 
@@ -43,4 +44,9 @@ fs.readdir(filePath, function(err, list) {
     var address = path.join(link, filePath, list[0]);
     console.log('Server running at ' + address);
     c.exec('open ' + address);
-})
+});
+
+var server = livereload.createServer();
+console.log(__dirname,livereload,'**********************');
+server.watch(path.join(__dirname, '../src/html'));
+
