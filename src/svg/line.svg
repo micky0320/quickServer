@@ -1,0 +1,32 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<script src="https://cdn.bootcss.com/zepto/1.0rc1/zepto.min.js"></script>
+	
+<script>
+	$(function() {
+		$('#svg').on('click',function(e) {
+			console.log('hello world!')
+		})
+		$('#svg ellipse').on('touchstart',function(e) {
+			e.preventDefault();
+			console.log('touch line')
+		})
+	})
+</script>
+<svg id="svg" width="100%" height="100%" version="1.1"
+xmlns="http://www.w3.org/2000/svg">
+
+<!-- <line x1="0" y1="0" x2="300" y2="300"
+style="stroke:rgb(99,99,99);stroke-width:2"/> -->
+
+
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" version="1.1">
+	<ellipse cx="240" cy="100" rx="220" ry="30" style="fill:purple"/>
+	<ellipse cx="220" cy="70" rx="190" ry="20" style="fill:lime"/>
+	<ellipse cx="210" cy="45" rx="170" ry="15" style="fill:yellow"/>
+</svg>
+
+</svg>
+
+

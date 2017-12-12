@@ -1,79 +1,145 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Document</title>
-	<style>
-		header, footer, main {
-			display: block;
-		}
+	<meta charset="utf-8" />
+	<title>Document</title>
+	<meta name="description" content="平安金融科技">
+	<!-- 优先使用 IE 最新版本和 Chrome -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<!-- 为移动设备添加 viewport -->
+	<meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+	<!-- 添加到主屏后的标题（iOS 6 新增） -->
+	<meta name="apple-mobile-web-app-title" content="平安金融科技">
+	<!-- 是否启用 WebApp 全屏模式，删除苹果默认的工具栏和菜单栏 -->
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<!-- 设置苹果工具栏颜色 -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<!-- 忽略页面中的数字识别为电话，忽略email识别 -->
+	<meta name="format-detection" content="telephone=no, email=no" />
+	<!-- Color the status bar on mobile devices -->
+	<meta name="theme-color" content="#2F3BA2">
+	<!--下面三个是清除缓存 微信浏览器缓存严重又无刷新；这个方法调试的时候很方便-->
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta http-equiv="Expires" content="0">
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script src="https://cdn.bootcss.com/zepto/1.0rc1/zepto.min.js"></script>
+	<script type="text/javascript">
+	signature();
+    function signature() {
+        const self = this;
+        let yname = location.origin;
+        console.log(yname,'nameorigin------')
+        $.ajax({
+            type: 'GET',
+            url: yname + '/api/wechat/jsapi/signature',
+            data: {
+                url: window.location.href,
+            },
+            dataType: 'jsonp',
+            success: function (data) {
+                // console.log(data);
+                switch (data.status) {
+                    case 'SUCCESS' :
+                        configAppId = data.attributes.config.appid;
+                        configTimestamp = data.attributes.config.timestamp;
+                        configNoncestr = data.attributes.config.noncestr;
+                        configSignature = data.attributes.config.signature;
+                        wechatConfig();
+                        break;
+                    default :
+                }
+            },
+            error: function (xhr, errorType, error) {
+                console.log(xhr, errorType, error);
+            }
+        })
+    }
 
-		header {
-			position: fixed;//或者absolute
-			height: 50px;
-			left: 0;
-			right: 0;
-			top: 0;
-			background:red;
-		}
+    function wechatConfig() {
+            wx.config({
+                debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                appId: configAppId, // 必填，公众号的唯一标识
+                timestamp: configTimestamp, // 必填，生成签名的时间戳
+                nonceStr: configNoncestr, // 必填，生成签名的随机串
+                signature: configSignature,// 必填，签名，见附录1
+                jsApiList: ['scanQRCode'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+            });
+    }
+    
+    $(function() {
+        wx.checkJsApi({
+            jsApiList: ['scanQRCode'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+            success: function(res) {
+                // 以键值对的形式返回，可用的api值true，不可用为false
+                // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
+                console.log(res,'-------')
+            }
+        });
+        $('#scanQRCode').click(function() {
+            wx.scanQRCode({
+                desc: 'scanQRCode desc',
+                needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                success: function (res) {
+                    console.log(res,'+++++++')
+                   // 回调
+                },
+                error: function(res){
+                      if(res.errMsg.indexOf('function_not_exist') > 0){
+                           alert('版本过低请升级')
+                        }
+                 }
+            });
+        })
 
-		footer {
-			position: fixed;//或者写成absolute
-			height: 34px;
-			left: 0;
-			right: 0;
-			bottom: 0;
-		}
+        $("#file-input").on("change", function() {
+            console.log(`file name is ${this.value}`);
+            let formData = new FormData(this.form);
+            formData.append("fileName", this.value);
+            console.log(formData);
+        });
+        $("#file-input").on("change", function() {
+            let fileReader = new FileReader();
+            console.log(this.files)
+            let fileType = this.files[0].type;
+            fileReader.onload = function() {
+                if (/^image/.test(fileType)) {
+                    // 读取结果在fileReader.result里面
+                    $(`<img src="${this.result}">`).appendTo("body");
+                }
+            }
+            // 打印原始File对象
+            console.log(this.files[0]);
+            // base64方式读取
+            fileReader.readAsDataURL(this.files[0]);
+        });
+  
+    })
+    
 
-		main {
-			width:100%;
-			/* main绝对定位，进行内部滚动 */
-			position: absolute;
-			top: 50px;
-			bottom: 34px;
-			/* 使之可以滚动 */
-			overflow-y: scroll;
-			/* 增加该属性，可以增加弹性，是滑动更加顺畅 */
-			-webkit-overflow-scrolling: touch;
-		}
 
-		main .content {
-			height: auto;
-		}
+
+
+
+    </script>
+
+	<style type="text/css">
+		*{margin:0;padding:0;list-style: none;box-sizing: border-box;}
+        body {    padding-top: 50px;height: 100vh;}
+		p {height:30px;line-height: 30px;}
+
 	</style>
 </head>
 <body>
-<header>
-	123
-</header>
+	<p id="scanQRCode">扫一扫</p>
+	<p id="btn1" onclick="alert('成功')">开始录音</p>
 
-<!-- 可以滚动的区域 -->
-<main>
-	<div class="content">
-		<p>14</p>
-		<p>16</p>
-		<p>17</p>
-		<p>19</p>
-		<p>1</p>
-		<p>12</p>
-		<p>13</p>
-		<p>14</p>
-		<p>16</p>
-		<p>17</p>
-		<p>19</p>
-		<!-- 内容在这里... -->
-	</div>
-</main>
-
-<!-- fixed定位的底部 （absolute绝对定位也可以）-->
-<footer>
-	<input type="text" placeholder="Footer..."/>
-	<button class="submit">提交</button>
-</footer>
+    <form>
+        <input type="file" id="file-input" name="fileContent">
+    </form>
 
 
-<script src="http://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 
 </body>
 </html>

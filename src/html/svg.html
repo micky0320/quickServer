@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Document</title>
+	<meta name="description" content="平安金融科技">
+	<!-- 优先使用 IE 最新版本和 Chrome -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<!-- 为移动设备添加 viewport -->
+	<meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+	<!-- 添加到主屏后的标题（iOS 6 新增） -->
+	<meta name="apple-mobile-web-app-title" content="平安金融科技">
+	<!-- 是否启用 WebApp 全屏模式，删除苹果默认的工具栏和菜单栏 -->
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<!-- 设置苹果工具栏颜色 -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<!-- 忽略页面中的数字识别为电话，忽略email识别 -->
+	<meta name="format-detection" content="telephone=no, email=no" />
+	<!-- Color the status bar on mobile devices -->
+	<meta name="theme-color" content="#2F3BA2">
+	<!--下面三个是清除缓存 微信浏览器缓存严重又无刷新；这个方法调试的时候很方便-->
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta http-equiv="Expires" content="0">
+	<script src="https://cdn.bootcss.com/zepto/1.0rc1/zepto.min.js"></script>
+
+
+	<style type="text/css">
+		*{margin:0;padding:0;list-style: none;box-sizing: border-box;}
+        body { padding-top: 50px;height: 100vh;}
+
+	</style>
+</head>
+<body>
+    <svg width="100%" height="200" version="1.1"
+    xmlns="http://www.w3.org/2000/svg">
+        <rect width="100" height="100"
+        style="fill:rgb(0,0,255);stroke-width:1;
+        stroke:rgb(0,0,0)"/>
+        <circle cx="150" cy="50" width="100" height="100" r="40"></circle>
+        <ellipse cx="300" cy="50" rx="70" ry="40"
+        style="fill:rgb(200,100,50);
+        stroke:rgb(0,0,100);stroke-width:2"/>
+        <circle cx="100" cy="100" r="30" fill="#f59393"></circle>
+        <circle cx="100" cy="150" r="30" fill="#f59393"></circle>
+        <path d="M70,100 Q80,125 70,150 L130,150 Q120,125 130,100 L70,100" fill="#f59393" stroke="black"></path>
+    
+    </svg>
+
+    <embed src="http://www.w3school.com.cn/svg/ellipse2.svg" width="300" height="100" 
+    type="image/svg+xml"
+    pluginspage="http://www.adobe.com/svg/viewer/install/" id="svg0" />
+    <iframe src="http://www.w3school.com.cn/svg/ellipse2.svg" width="300" height="100" id="svg2">
+    </iframe>
+    <object data="../svg/line.svg" width="300" height="100" 
+    type="image/svg+xml">
+    </object>
+    <script type="text/javascript">
+    
+    // $(function() {
+    //     $('#svg').on('click',function(e) {
+    //         e.preventDefault();
+    //         console.log(1)
+    //     })
+    // })
+    
+    </script>
+</body>
+</html>
